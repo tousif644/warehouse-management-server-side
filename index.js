@@ -6,7 +6,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 // defining port and calling express
 const port = process.env.PORT || 5000;
 const app = express();
-require('dotenv').config();
+require("dotenv").config();
 // middle ware
 app.use(cors());
 app.use(express.json());
@@ -29,7 +29,7 @@ async function run() {
       .db("warehouseManagement")
       .collection("products");
 
-
+    const orderCollection = client.db("farnsOrder").collection("orders");
     //getting all the datas
     app.get("/products", async (req, res) => {
       const query = {};
@@ -44,15 +44,14 @@ async function run() {
       const query = { _id: ObjectId(id) };
       const service = await productCollection.findOne(query);
       res.send(service);
-    });     
-
+    });
 
     app.delete("/products/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       const service = await productCollection.deleteOne(query);
       res.send(service);
-    }); 
+    });
 
     app.post("/products", async (req, res) => {
       const newProduct = req.body;
@@ -60,13 +59,13 @@ async function run() {
       res.send(product);
     });
 
-    app.get('/farnsOrder',async(req,res) => {
+    app.get("/farnsOrder", async (req, res) => {
       const email = req.query.email;
-      const query = {email : email};
+      const query = { email: email };
       const cursor = await orderCollection.find(query);
       const result = await cursor.toArray();
-      res.send(result)
-    })
+      res.send(result);
+    });
 
     app.post("/farnsOrder", async (req, res) => {
       const order = req.body;
