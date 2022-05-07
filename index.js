@@ -61,6 +61,12 @@ async function run() {
     });
 
     
+
+    app.post("/farnsOrder", async (req, res) => {
+      const order = req.body;
+      const result = await orderCollection.insertOne(order);
+      res.send(result);
+    });
   } finally {
   }
 }
