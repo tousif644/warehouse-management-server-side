@@ -29,6 +29,7 @@ async function run() {
       .db("warehouseManagement")
       .collection("products");
 
+
     //getting all the datas
     app.get("/products", async (req, res) => {
       const query = {};
@@ -37,6 +38,15 @@ async function run() {
       res.send(result);
       console.log("CONNECTED TO DB");
     });
+    // getting data by id
+    app.get("/products/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const service = await productCollection.findOne(query);
+      res.send(service);
+    });     
+
+
   } finally {
   }
 }
