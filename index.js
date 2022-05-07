@@ -60,7 +60,13 @@ async function run() {
       res.send(product);
     });
 
-    
+    app.get('/farnsOrder',async(req,res) => {
+      const email = req.query.email;
+      const query = {email : email};
+      const cursor = await orderCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result)
+    })
 
     app.post("/farnsOrder", async (req, res) => {
       const order = req.body;
