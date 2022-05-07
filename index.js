@@ -10,3 +10,12 @@ const app = express();
 // middle ware
 app.use(cors());
 app.use(express.json());
+
+
+
+app.get("/", (req, res) => {
+  res.send("Runing Warehouse Server");
+});
+app.listen(port, () => {
+  console.log("listening to port...");
+});
